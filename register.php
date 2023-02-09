@@ -13,6 +13,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && $_POST["username"]
     if (strlen($password) < 8) {
       $message = "<div class='error'> Mot de passe trop court </div>";
       header("Location: registration.php?message=$message");
+      mysqli_stmt_close($stmt);
+      mysqli_close($conn);
       exit;
     }
 
@@ -35,13 +37,18 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && $_POST["username"]
       // Login successful
       $message = "<div class='success'> Compte créé </div>";
       header("Location: index.php?message=$message");
+      mysqli_stmt_close($stmt);
+      mysqli_close($conn);
       exit();
     }
-
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
     exit;
   }
 } else {
   $message = "<div class='error'> Nom d'utilisateur et/ou mot de passe non renseignés </div>";
   header("Location: registration.php?message=$message");
+  mysqli_stmt_close($stmt);
+  mysqli_close($conn);
 }
 ?>

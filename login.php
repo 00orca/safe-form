@@ -16,16 +16,22 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && $_POST["username"]
         if (mysqli_num_rows($result) > 0) {
             // Login successful
             header("Location: admin.php");
-            exit();
+            mysqli_stmt_close($stmt);
+            mysqli_close($conn);
+            exit;
         } else {
             $message = "<div class='error'> Nom d'utilisateur ou mot de passe faux </div>";
             header("Location: index.php?message=$message");
+            mysqli_stmt_close($stmt);
+            mysqli_close($conn);
             exit;
         }
     }
 } else {
     $message = "<div class='error'> Nom d'utilisateur et/ou mot de passe non renseignés </div>";
     header("Location: index.php?message=$message");
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
     exit;
 }
 ?>
